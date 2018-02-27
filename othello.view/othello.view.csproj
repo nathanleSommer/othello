@@ -35,7 +35,7 @@
   </PropertyGroup>
   <ItemGroup>
     <Reference Include="DataGrid2DLibrary">
-      <HintPath>..\..\..\..\Downloads\DataGrid2DLibrary\DataGrid2DLibrary.dll</HintPath>
+      <HintPath>..\..\..\Downloads\DataGrid2DLibrary\DataGrid2DLibrary.dll</HintPath>
     </Reference>
     <Reference Include="System" />
     <Reference Include="System.Data" />
@@ -72,6 +72,9 @@
   </ItemGroup>
   <ItemGroup>
     <Compile Include="mvvm\BoardViewModel.cs" />
+    <Compile Include="mvvm\DiscViewModel.cs" />
+    <Compile Include="mvvm\TileViewModel.cs" />
+    <Compile Include="mvvm\ViewModelBase.cs" />
     <Compile Include="Properties\AssemblyInfo.cs">
       <SubType>Code</SubType>
     </Compile>
@@ -98,6 +101,10 @@
     <None Include="App.config" />
   </ItemGroup>
   <ItemGroup>
+    <ProjectReference Include="..\othello.ia\othello.ia.csproj">
+      <Project>{7d782df3-c2f5-4692-abb3-14bdfd70bc8a}</Project>
+      <Name>othello.ia</Name>
+    </ProjectReference>
     <ProjectReference Include="..\othello.model\othello.model.csproj">
       <Project>{3633D4F9-C0E4-4AF8-92B1-ED283BEFA698}</Project>
       <Name>othello.model</Name>

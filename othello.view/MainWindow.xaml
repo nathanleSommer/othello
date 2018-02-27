@@ -4,12 +4,27 @@
         xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
         xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
         xmlns:local="clr-namespace:othello.view"
-        xmlns:dg2d="clr-namespace:DataGrid2DLibrary;assembly=DataGrid2DLibrary"
         mc:Ignorable="d"
-        Title="MainWindow" Height="350" Width="525">
-    <Grid>
-        <dg2d:DataGrid2D Name="dataGrid2D"
-                 ItemsSource2D="{Binding Board.Board}"/>
-        
+        Title="MainWindow" Height="700" Width="700">
+    <Grid Height="600" Width="600">
+        <Grid.Resources>
+                <BooleanToVisibilityConverter x:Key="BoolToVis" />
+            </Grid.Resources>
+
+        <ItemsControl Name="BoardControl" ItemsSource="{Binding Tiles}">
+            <ItemsControl.ItemsPanel>
+                <ItemsPanelTemplate>
+                    <UniformGrid Rows="8" Columns="8"/>
+                </ItemsPanelTemplate>
+            </ItemsControl.ItemsPanel>
+            <ItemsControl.ItemTemplate>
+                <DataTemplate>
+                    <Grid Name="Tile">
+                        <Rectangle Fill="ForestGreen" Width="75" Height="75" Stroke="White" MouseUp="Tile_MouseUp"/>
+                        <Ellipse Name="Disc" Visibility="{Binding HasDisc, Converter={StaticResource BoolToVis}}" Fill="{Binding Disc.Color}"  Width="65" Height="65" />
+                    </Grid>
+                </DataTemplate>
+            </ItemsControl.ItemTemplate>
+        </ItemsControl>
     </Grid>
 </Window>

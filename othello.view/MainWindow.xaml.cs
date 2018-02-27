@@ -1,6 +1,8 @@
-﻿using othello.view.mvvm;
+﻿using othello.ia;
+using othello.view.mvvm;
 using System;
 using System.Collections.Generic;
+using System.Collections.ObjectModel;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
@@ -21,13 +23,44 @@ namespace othello.view
     /// </summary>
     public partial class MainWindow : Window
     {
+        private bool _canPlay;
+
         BoardViewModel Board { get; set; }
+
+        public ObservableCollection<TileViewModel> Tiles
+        {
+            get
+            {
+                return Board.Tiles;
+            }
+            set
+            {
+                Board.Tiles = value;
+            }
+        }
 
         public MainWindow()
         {
-            Board = new BoardViewModel();
-            this.DataContext = this;
             InitializeComponent();
+            DataContext = this;
+            Board = new BoardViewModel();
+            _canPlay = true;
+        }
+
+        private void Tile_MouseUp(object sender, MouseButtonEventArgs e)
+        {
+            Rectangle r = (Rectangle)sender;
+            TileViewModel tile = (TileViewModel)r.DataContext;
+            int x = tile.PosX;
+            int y = tile.PosY;
+            if (!tile.HasDisc && _canPlay)
+            {
+                tile.setDisc(new DiscViewModel(x, y, new SolidColorBrush(Colors.White)));
+                Board.Board.Tiles[x, y] = 1;
+                _canPlay = false;
+
+                Board.PlayMoveIA();
+            }
         }
     }
 }
