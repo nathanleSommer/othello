@@ -27,5 +27,15 @@ namespace othello.model
             Tiles[pos.Key, pos.Value] = 2;
             return pos;
         }
+
+        public bool IsValidPosition(int x, int y)
+        {
+            if (Tiles[x, y] != 0) return false;
+            if (x != 0 && Tiles[x - 1, y] != 0) return true;
+            if (x != 7 && Tiles[x + 1, y] != 0) return true;
+            if (y != 0 && Tiles[x, y - 1] != 0) return true;
+            if (y != 7 && Tiles[x, y + 1] != 0) return true;
+            return false;
+        }
     }
 }

@@ -61,7 +61,11 @@ namespace othello.view.mvvm
                     t.setDisc(new DiscViewModel(t.PosX, t.PosY, new SolidColorBrush(Colors.Black)));
                 }
             }
+        }
 
+        public bool IsValidPosition(TileViewModel tile)
+        {
+            return Board.IsValidPosition(tile.PosX, tile.PosY);
         }
     }
 }
