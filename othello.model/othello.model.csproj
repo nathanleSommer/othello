@@ -4,4 +4,8 @@
     <TargetFramework>netstandard1.4</TargetFramework>
   </PropertyGroup>
 
+  <ItemGroup>
+    <ProjectReference Include="..\othello.ia\othello.ia.csproj" />
+  </ItemGroup>
+
 </Project>
