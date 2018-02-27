@@ -53,11 +53,15 @@ namespace othello.view
             TileViewModel tile = (TileViewModel)r.DataContext;
             int x = tile.PosX;
             int y = tile.PosY;
+            
             if (Board.IsValidPosition(tile) && _canPlay)
             {
                 tile.setDisc(new DiscViewModel(x, y, new SolidColorBrush(Colors.White)));
-                Board.Board.Tiles[x, y] = 1;
+                Board.PlayMovePlayer(x, y);
                 Board.PlayMoveIA();
+            } else
+            {
+                MessageBox.Show("" + Board.Board.Tiles[x, y]);
             }
         } 
     }

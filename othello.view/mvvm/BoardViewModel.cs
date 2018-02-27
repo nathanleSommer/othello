@@ -51,6 +51,12 @@ namespace othello.view.mvvm
             }          
         }
 
+        public void PlayMovePlayer(int x, int y)
+        {
+            Board.PlayMovePlayer(x, y);
+            ReverseDiscs();
+        }
+
         public void PlayMoveIA()
         {
             KeyValuePair<int,int> pos = Board.PlayMoveIA();
@@ -59,8 +65,28 @@ namespace othello.view.mvvm
                 if(t.PosX == pos.Key && t.PosY == pos.Value)
                 {
                     t.setDisc(new DiscViewModel(t.PosX, t.PosY, new SolidColorBrush(Colors.Black)));
+                    ReverseDiscs();
+                    return;
                 }
             }
+        }
+
+        private void ReverseDiscs()
+        {
+            foreach (TileViewModel tile in Tiles)
+            {
+                if (tile.HasDisc)
+                {
+                    if (Board.Tiles[tile.PosX, tile.PosY] == 1)
+                    {
+                        tile.Disc.Color = new SolidColorBrush(Colors.White);
+                    }
+                    else if (Board.Tiles[tile.PosX, tile.PosY] == 2)
+                    {
+                        tile.Disc.Color = new SolidColorBrush(Colors.Black);
+                    }
+                }
+            }    
         }
 
         public bool IsValidPosition(TileViewModel tile)

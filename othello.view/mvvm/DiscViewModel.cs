@@ -11,7 +11,20 @@ namespace othello.view.mvvm
     {
         public int PosX { get; set; }
         public int PosY { get; set; }
-        public Brush Color { get; set; }
+
+        private Brush _Color;
+        public Brush Color
+        {
+            get
+            {
+                return _Color;
+            }
+            set
+            {
+                _Color = value;
+                RaisePropertyChanged("Color");
+            }
+        }
 
         public DiscViewModel(int x, int y, Brush color)
         {

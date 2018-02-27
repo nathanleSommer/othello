@@ -8,16 +8,22 @@ namespace othello.ia
     {
         public static KeyValuePair<int,int> SelectPosition(int[,] tiles)
         {
+            List<KeyValuePair<int, int>> validPos = new List<KeyValuePair<int, int>>();
             for(int i = 0; i < 8; i++)
             {
                 for(int j = 0; j < 8; j++)
                 {
-                    if(tiles[i,j] == 0 && IsValidPosition(tiles, i,j))
+                    if(IsValidPosition(tiles, i,j))
                     {
-                        tiles[i, j] = 2;
-                        return new KeyValuePair<int, int>(i,j);
+                        validPos.Add(new KeyValuePair<int, int>(i,j));
                     }
                 }
+            }
+            if(validPos.Count != 0)
+            {
+                Random rnd = new Random();
+                int r = rnd.Next(validPos.Count);
+                return validPos[r];
             }
             return default(KeyValuePair<int,int>);
         }
