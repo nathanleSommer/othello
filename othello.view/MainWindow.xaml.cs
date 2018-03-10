@@ -58,11 +58,16 @@ namespace othello.view
             {
                 tile.setDisc(new DiscViewModel(x, y, new SolidColorBrush(Colors.White)));
                 Board.PlayMovePlayer(x, y);
-                Board.PlayMoveIA();
+                
             } else
             {
-                MessageBox.Show("" + Board.Board.Tiles[x, y]);
+                MessageBox.Show("("+x+";"+y+") : " + Board.Board.Tiles[x, y]);
             }
-        } 
+        }
+
+        private void Button_Click(object sender, RoutedEventArgs e)
+        {
+            Board.PlayMoveIA();
+        }
     }
 }
