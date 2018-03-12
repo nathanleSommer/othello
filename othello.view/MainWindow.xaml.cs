@@ -24,8 +24,17 @@ namespace othello.view
     public partial class MainWindow : Window
     {
         private bool _canPlay;
+        private TileViewModel _tile;
 
-        BoardViewModel Board { get; set; }
+        public BoardViewModel Board { get; set; }
+        public int BoardSize
+        {
+            get
+            {
+                return 8;
+            }
+            private set { }
+        }
 
         public ObservableCollection<TileViewModel> Tiles
         {
@@ -43,31 +52,44 @@ namespace othello.view
         {
             InitializeComponent();
             DataContext = this;
-            Board = new BoardViewModel();
+            Board = new BoardViewModel(BoardSize);
             _canPlay = true;
         }
 
         private void Tile_MouseUp(object sender, MouseButtonEventArgs e)
         {
-            Rectangle r = (Rectangle)sender;
-            TileViewModel tile = (TileViewModel)r.DataContext;
-            int x = tile.PosX;
-            int y = tile.PosY;
-            
-            if (Board.IsValidPosition(tile) && _canPlay)
+            if (_canPlay)
             {
-                tile.setDisc(new DiscViewModel(x, y, new SolidColorBrush(Colors.White)));
-                Board.PlayMovePlayer(x, y);
-                
-            } else
-            {
-                MessageBox.Show("("+x+";"+y+") : " + Board.Board.Tiles[x, y]);
-            }
+                Rectangle r = (Rectangle)sender;
+                _tile = (TileViewModel)r.DataContext;
+                int x = _tile.PosX;
+                int y = _tile.PosY;
+
+                if (Board.IsValidPosition(_tile) && _canPlay)
+                {
+                    _tile.setDisc(new DiscViewModel(x, y, new SolidColorBrush(Colors.White)));
+                    Board.PlayMovePlayer(x, y);
+                    _canPlay = false;
+                }
+                else
+                {
+                    MessageBox.Show("(" + x + ";" + y + ") : " + Board.Board.Tiles[x, y]);
+                }
+            } 
         }
 
-        private void Button_Click(object sender, RoutedEventArgs e)
+        private void Button_Undo(object sender, RoutedEventArgs e)
         {
+            _tile.Disc = null;
+            _canPlay = true;
+        }
+
+
+        private void Button_EndTurn(object sender, RoutedEventArgs e)
+        {
+            //Board.PlayMovePlayer(_tile.PosX, _tile.PosY);
             Board.PlayMoveIA();
+            _canPlay = true;
         }
     }
 }

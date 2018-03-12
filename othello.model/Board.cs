@@ -8,13 +8,15 @@ namespace othello.model
 {
     public class Board
     {
+        public int BoardSize;
         public int[,] Tiles { get; set; }    
-        public Board()
+        public Board(int size)
         {
-            Tiles = new int[8,8];
-            for(int i = 0; i < 8; i++)
+            BoardSize = size;
+            Tiles = new int[BoardSize, BoardSize];
+            for(int i = 0; i < BoardSize; i++)
             {
-                for(int j = 0; j < 8; j++)
+                for(int j = 0; j < BoardSize; j++)
                 {
                     Tiles[i, j] = 0;
                 }
@@ -29,9 +31,9 @@ namespace othello.model
             returnTiles(1, x, y);
         }
 
-        public KeyValuePair<int,int> PlayMoveIA()
+        public KeyValuePair<int,int> PlayMoveAI()
         {
-            KeyValuePair<int,int> pos = IANoob.SelectPosition(Tiles);
+            KeyValuePair<int,int> pos = AINoob.SelectPosition(Tiles, BoardSize);
             int x = pos.Key;
             int y = pos.Value;
             Tiles[x,y] = 2;
@@ -45,9 +47,9 @@ namespace othello.model
         {
             if (Tiles[x, y] != 0) return false;
             if (x != 0 && Tiles[x - 1, y] != 0) return true;
-            if (x != 7 && Tiles[x + 1, y] != 0) return true;
+            if (x != BoardSize - 1 && Tiles[x + 1, y] != 0) return true;
             if (y != 0 && Tiles[x, y - 1] != 0) return true;
-            if (y != 7 && Tiles[x, y + 1] != 0) return true;
+            if (y != BoardSize - 1 && Tiles[x, y + 1] != 0) return true;
             return false;
         }
 
@@ -89,11 +91,11 @@ namespace othello.model
         }
         private void diagTopRight(int player, int x, int y)
         {
-            if (x <= 1 || y >= 6 || Tiles[x - 1, y + 1] == player || Tiles[x - 1, y + 1] == 0) return;
+            if (x <= 1 || y >= BoardSize - 2 || Tiles[x - 1, y + 1] == player || Tiles[x - 1, y + 1] == 0) return;
 
             int i = x - 1;
             int j = y + 1;
-            while (Tiles[i, j] != player && Tiles[i, j] != 0 && i != 0 && j != 7)
+            while (Tiles[i, j] != player && Tiles[i, j] != 0 && i != 0 && j != BoardSize - 1)
             {
                 i--;
                 j++;
@@ -111,12 +113,12 @@ namespace othello.model
         }
         private void diagDownRight(int player, int x, int y)
         {
-            if (y >= 6 || x >= 6 || Tiles[x + 1, y + 1] == 0 || Tiles[x + 1, y + 1] == player) return;
+            if (y >= BoardSize - 2 || x >= BoardSize - 2 || Tiles[x + 1, y + 1] == 0 || Tiles[x + 1, y + 1] == player) return;
 
             //on trouve une piece adverse à la diagonale haut-gauche de la piece qu'on vient de placer
             int i = x + 1;
             int j = y + 1;
-            while (Tiles[i, j] != player && Tiles[i, j] != 0 && i != 7 && j != 7)
+            while (Tiles[i, j] != player && Tiles[i, j] != 0 && i != BoardSize && j != BoardSize - 1)
             {
                 i++;
                 j++;
@@ -134,11 +136,11 @@ namespace othello.model
         }
         private void diagDownLeft(int player, int x, int y)
         {
-            if (x >= 6 || y <= 1 || Tiles[x + 1, y - 1] == player || Tiles[x + 1, y - 1] == 0) return;
+            if (x >= BoardSize - 2 || y <= 1 || Tiles[x + 1, y - 1] == player || Tiles[x + 1, y - 1] == 0) return;
 
             int i = x + 1;
             int j = y - 1;
-            while (Tiles[i, j] != player && Tiles[i, j] != 0 && i != 7 && j != 0)
+            while (Tiles[i, j] != player && Tiles[i, j] != 0 && i != BoardSize - 1 && j != 0)
             {
                 i++;
                 j--;
@@ -195,11 +197,11 @@ namespace othello.model
         }
         private void right(int player, int x, int y)
         {
-            if (y == 7 || Tiles[x, y + 1] == 0 || Tiles[x, y + 1] == player) return;
+            if (y == BoardSize - 1 || Tiles[x, y + 1] == 0 || Tiles[x, y + 1] == player) return;
 
             //on trouve une piece adverse à la droite de la piece qu'on vient de placer
             int i = y + 1;
-            while (Tiles[x, i] != player && Tiles[x, i] != 0 && i != 7)
+            while (Tiles[x, i] != player && Tiles[x, i] != 0 && i != BoardSize - 1)
             {
                 //on compte le nombre de pieces adverses à retourner dans le cas où l'on trouve une piece à nous en bout de ligne
                 i++;
@@ -215,11 +217,11 @@ namespace othello.model
         }
         private void down(int player, int x, int y)
         {
-            if (x == 7 || Tiles[x + 1, y] == 0 || Tiles[x + 1, y] == player) return;
+            if (x == BoardSize - 1 || Tiles[x + 1, y] == 0 || Tiles[x + 1, y] == player) return;
 
             //on trouve une piece adverse au dessus de la piece qu'on vient de placer
             int i = x + 1;
-            while (Tiles[i, y] != player && Tiles[i, y] != 0 && i != 7)
+            while (Tiles[i, y] != player && Tiles[i, y] != 0 && i != BoardSize - 1)
             {
                 //on compte le nombre de pieces adverses à retourner dans le cas où l'on trouve une piece à nous en bout de ligne
                 i++;

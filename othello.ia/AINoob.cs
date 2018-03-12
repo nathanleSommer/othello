@@ -1,19 +1,18 @@
 ﻿using System;
 using System.Collections.Generic;
-using System.Text;
 
 namespace othello.ia
 {
-    public class IANoob
+    public class AINoob
     {
-        public static KeyValuePair<int,int> SelectPosition(int[,] tiles)
+        public static KeyValuePair<int,int> SelectPosition(int[,] tiles, int size)
         {
             List<KeyValuePair<int, int>> validPos = new List<KeyValuePair<int, int>>();
-            for(int i = 0; i < 8; i++)
+            for(int i = 0; i < size; i++)
             {
-                for(int j = 0; j < 8; j++)
+                for(int j = 0; j < size; j++)
                 {
-                    if(IsValidPosition(tiles, i,j))
+                    if(IsValidPosition(tiles, i,j, size))
                     {
                         validPos.Add(new KeyValuePair<int, int>(i,j));
                     }
@@ -28,13 +27,13 @@ namespace othello.ia
             return default(KeyValuePair<int,int>);
         }
 
-        public static bool IsValidPosition(int[,] tiles, int x, int y)
+        public static bool IsValidPosition(int[,] tiles, int x, int y, int size)
         {
             if (tiles[x, y] != 0) return false;
             if (x != 0 && tiles[x - 1, y] != 0) return true;
-            if (x != 7 && tiles[x + 1, y] != 0) return true;
+            if (x != size - 1 && tiles[x + 1, y] != 0) return true;
             if (y != 0 && tiles[x, y - 1] != 0) return true;
-            if (y != 7 && tiles[x, y + 1] != 0) return true;
+            if (y != size - 1 && tiles[x, y + 1] != 0) return true;
             return false;
         }
     }

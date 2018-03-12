@@ -18,18 +18,22 @@
         <ItemsControl Grid.Row="0" Name="BoardControl" ItemsSource="{Binding Tiles}">
                 <ItemsControl.ItemsPanel>
                     <ItemsPanelTemplate>
-                        <UniformGrid Rows="8" Columns="8"/>
+                    <UniformGrid Rows="{Binding BoardSize}" Columns="{Binding BoardSize}"/>
                     </ItemsPanelTemplate>
                 </ItemsControl.ItemsPanel>
                 <ItemsControl.ItemTemplate>
                     <DataTemplate>
                         <Grid Name="Tile">
-                            <Rectangle Fill="ForestGreen" Width="75" Height="75" Stroke="White" MouseUp="Tile_MouseUp"/>
+                            <Rectangle Fill="ForestGreen" Width="80" Height="80" Stroke="White" MouseUp="Tile_MouseUp"/>
                             <Ellipse Name="Disc" Visibility="{Binding HasDisc, Converter={StaticResource BoolToVis}}" Fill="{Binding Disc.Color}"  Width="65" Height="65" />
                         </Grid>
                     </DataTemplate>
                 </ItemsControl.ItemTemplate>
             </ItemsControl>
-            <Button Grid.Row="1" Content="play IA" Click="Button_Click"></Button>
+        <StackPanel Orientation="Horizontal" Grid.Row="1">
+            <!--<Button Height="35" Width="100" HorizontalAlignment="Center" Content="Annuler le coup" Click="Button_Undo"></Button>-->
+            <Button Height="35" Width="100" HorizontalAlignment="Center" Content="Tour IA" Click="Button_EndTurn"></Button>
+
+        </StackPanel>
     </Grid>
 </Window>

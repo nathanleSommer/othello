@@ -11,36 +11,38 @@ namespace othello.view.mvvm
 {
     public class BoardViewModel : ViewModelBase
     {
+        public int BoardSize;
         public Board Board { get; set; }
 
         public ObservableCollection<TileViewModel> Tiles { get; set; }
 
-        public BoardViewModel()
+        public BoardViewModel(int size)
         {
-            Board = new Board();
+            BoardSize = size;
+            Board = new Board(size);
             Tiles = new ObservableCollection<TileViewModel>();
 
-            for(int i = 0; i < 8; i++)
+            for(int i = 0; i < BoardSize; i++)
             {
-                for(int j = 0; j < 8; j++)
+                for(int j = 0; j < BoardSize; j++)
                 {
                     TileViewModel tile = new TileViewModel(i,j);
-                    if (i == 3 && j == 3)
+                    if (i == BoardSize/2 - 1 && j == BoardSize / 2 - 1)
                     {
                         tile.setDisc(new DiscViewModel(i, j, new SolidColorBrush(Colors.White)));
                         Board.Tiles[i, j] = 1;
                     }
-                    if (i == 4 && j == 3)
+                    if (i == BoardSize / 2 && j == BoardSize / 2 - 1)
                     {
                         tile.setDisc(new DiscViewModel(i, j, new SolidColorBrush(Colors.Black)));
                         Board.Tiles[i, j] = 2;
                     }
-                    if(i == 3 && j == 4)
+                    if(i == BoardSize / 2 - 1 && j == BoardSize / 2)
                     {
                         tile.setDisc(new DiscViewModel(i, j, new SolidColorBrush(Colors.Black)));
                         Board.Tiles[i, j] = 2;
                     }
-                    if (i == 4 && j == 4)
+                    if (i == BoardSize / 2 && j == BoardSize / 2)
                     {
                         tile.setDisc(new DiscViewModel(i, j, new SolidColorBrush(Colors.White)));
                         Board.Tiles[i, j] = 1;
@@ -59,7 +61,7 @@ namespace othello.view.mvvm
 
         public void PlayMoveIA()
         {
-            KeyValuePair<int,int> pos = Board.PlayMoveIA();
+            KeyValuePair<int,int> pos = Board.PlayMoveAI();
             foreach(TileViewModel t in Tiles)
             {
                 if(t.PosX == pos.Key && t.PosY == pos.Value)
