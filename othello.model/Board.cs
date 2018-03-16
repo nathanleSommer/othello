@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using System.Text;
 using System.Linq;
 using othello.ia;
+using othello.ia.MinMaxAlphaBeta;
 
 namespace othello.model
 {
@@ -33,10 +34,10 @@ namespace othello.model
 
         public KeyValuePair<int,int> PlayMoveAI()
         {
-            KeyValuePair<int,int> pos = AINoob.SelectPosition(Tiles, BoardSize);
+            KeyValuePair<int, int> pos = AINoob.SelectPosition(Tiles, BoardSize);
             int x = pos.Key;
             int y = pos.Value;
-            Tiles[x,y] = 2;
+            Tiles[x, y] = 2;
 
             /* RETOURNER LES DISCS du joueur 2 (ia) */
             returnTiles(2, x, y);
