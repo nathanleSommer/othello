@@ -34,7 +34,11 @@ namespace othello.model
 
         public KeyValuePair<int,int> PlayMoveAI()
         {
-            KeyValuePair<int, int> pos = AINoob.SelectPosition(Tiles, BoardSize);
+            MinMax ai = new MinMax(this);
+
+            KeyValuePair<int, int> pos = ai.PlayMove(2);
+
+            //KeyValuePair<int, int> pos = AINoob.SelectPosition(Tiles, BoardSize);
             int x = pos.Key;
             int y = pos.Value;
             Tiles[x, y] = 2;
@@ -54,7 +58,7 @@ namespace othello.model
             return false;
         }
 
-        private void returnTiles(int player, int x, int y)
+        public void returnTiles(int player, int x, int y)
         {
             top(player, x, y);
             right(player, x, y);

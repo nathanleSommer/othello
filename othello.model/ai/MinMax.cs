@@ -1,4 +1,5 @@
-﻿using System;
+﻿using othello.model;
+using System;
 using System.Collections.Generic;
 using System.Text;
 
@@ -6,11 +7,15 @@ namespace othello.ia.MinMaxAlphaBeta
 {
     public class MinMax
     {
+        Board Game;
+        int[,] oldBoard;
         int[,] board;
 
-        public MinMax(int[,] b)
+        public MinMax(Board g)
         {
-            board = b;
+            Game = g;
+            board = g.Tiles;
+            oldBoard = (int[,])board.Clone();
         }
 
         public KeyValuePair<int,int> PlayMove(int depth)
@@ -21,7 +26,10 @@ namespace othello.ia.MinMaxAlphaBeta
             List<KeyValuePair<int, int>> validPos = SelectPossibleMoves(board);
             foreach (KeyValuePair<int,int> move in validPos)
             {
+                int[,] old = (int[,])board.Clone();
                 board[move.Key, move.Value] = 2;
+                Game.returnTiles(move.Key, move.Value, 2);
+
                 tmp = Min(board, depth - 1);
 
                 if(tmp > max)
@@ -30,7 +38,7 @@ namespace othello.ia.MinMaxAlphaBeta
                     maxi = move.Key;
                     maxj = move.Value;
                 }
-                board[move.Key, move.Value] = 0;
+                board = old;
             }
             
             return new KeyValuePair<int,int>(maxi,maxj);
@@ -40,7 +48,7 @@ namespace othello.ia.MinMaxAlphaBeta
         {
             if (depth == 0 || SelectPossibleMoves(board).Count == 0)
             {
-                return Eval(board);
+                return Eval(board, 1);
             }
 
             int min = 10000;
@@ -49,14 +57,17 @@ namespace othello.ia.MinMaxAlphaBeta
             List<KeyValuePair<int, int>> validPos = SelectPossibleMoves(board);
             foreach (KeyValuePair<int, int> move in validPos)
             {
+                int[,] old = (int[,])board.Clone();
                 board[move.Key, move.Value] = 1;
+                Game.returnTiles(move.Key, move.Value, 1);
+
                 tmp = Max(board, depth - 1);
 
                 if(tmp < min)
                 {
                     min = tmp;
                 }
-                board[move.Key, move.Value] = 0;
+                board = old;
             }
             return min;
         }
@@ -65,7 +76,7 @@ namespace othello.ia.MinMaxAlphaBeta
         {
             if (depth == 0 || SelectPossibleMoves(board).Count == 0)
             {
-                return Eval(board);
+                return Eval(board, 2);
             }
 
             int max = -10000;
@@ -86,9 +97,18 @@ namespace othello.ia.MinMaxAlphaBeta
             return max;
         }
 
-        private int Eval(int[,] board)
+        private int Eval(int[,] board, int player)
         {
-            return 0;
+            int score = 0;
+            for (int i = 0; i < Math.Sqrt(board.Length); i++)
+            {
+                for (int j = 0; j < Math.Sqrt(board.Length); j++)
+                {
+                    if (Game.Tiles[i, j] == player) score++;
+                    else if (Game.Tiles[i, j] != 0) score--;
+                }
+            }
+            return score;
         }
 
 
