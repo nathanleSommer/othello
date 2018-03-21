@@ -6,7 +6,7 @@
         xmlns:local="clr-namespace:othello.view"
         mc:Ignorable="d"
         Title="MainWindow" Height="700" Width="700">
-    <Grid Height="600" Width="600">
+    <Grid Height="500" Width="500">
         <Grid.Resources>
             <BooleanToVisibilityConverter x:Key="BoolToVis" />
         </Grid.Resources>

@@ -31,7 +31,7 @@ namespace othello.view
         {
             get
             {
-                return 8;
+                return 6;
             }
             private set { }
         }
@@ -65,9 +65,9 @@ namespace othello.view
                 int x = _tile.PosX;
                 int y = _tile.PosY;
 
-                if (Board.IsValidPosition(_tile) && _canPlay)
+                if (Board.IsValidPosition(1, _tile) && _canPlay)
                 {
-                    _tile.setDisc(new DiscViewModel(x, y, new SolidColorBrush(Colors.White)));
+                    _tile.setDisc(new DiscViewModel(x, y, new SolidColorBrush(Colors.Black)));
                     Board.PlayMovePlayer(x, y);
                     _canPlay = false;
                 }
@@ -87,7 +87,6 @@ namespace othello.view
 
         private void Button_EndTurn(object sender, RoutedEventArgs e)
         {
-            //Board.PlayMovePlayer(_tile.PosX, _tile.PosY);
             Board.PlayMoveIA();
             _canPlay = true;
         }

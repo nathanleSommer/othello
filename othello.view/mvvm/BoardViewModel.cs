@@ -30,22 +30,22 @@ namespace othello.view.mvvm
                     if (i == BoardSize/2 - 1 && j == BoardSize / 2 - 1)
                     {
                         tile.setDisc(new DiscViewModel(i, j, new SolidColorBrush(Colors.White)));
-                        Board.Tiles[i, j] = 1;
+                        Board.Tiles[i, j] = 2;
                     }
                     if (i == BoardSize / 2 && j == BoardSize / 2 - 1)
                     {
                         tile.setDisc(new DiscViewModel(i, j, new SolidColorBrush(Colors.Black)));
-                        Board.Tiles[i, j] = 2;
+                        Board.Tiles[i, j] = 1;
                     }
                     if(i == BoardSize / 2 - 1 && j == BoardSize / 2)
                     {
                         tile.setDisc(new DiscViewModel(i, j, new SolidColorBrush(Colors.Black)));
-                        Board.Tiles[i, j] = 2;
+                        Board.Tiles[i, j] = 1;
                     }
                     if (i == BoardSize / 2 && j == BoardSize / 2)
                     {
                         tile.setDisc(new DiscViewModel(i, j, new SolidColorBrush(Colors.White)));
-                        Board.Tiles[i, j] = 1;
+                        Board.Tiles[i, j] = 2;
                     }
                     Tiles.Add(tile);
                 }
@@ -66,7 +66,7 @@ namespace othello.view.mvvm
             {
                 if(t.PosX == pos.Key && t.PosY == pos.Value)
                 {
-                    t.setDisc(new DiscViewModel(t.PosX, t.PosY, new SolidColorBrush(Colors.Black)));
+                    t.setDisc(new DiscViewModel(t.PosX, t.PosY, new SolidColorBrush(Colors.White)));
                     ReverseDiscs();
                     return;
                 }
@@ -81,19 +81,19 @@ namespace othello.view.mvvm
                 {
                     if (Board.Tiles[tile.PosX, tile.PosY] == 1)
                     {
-                        tile.Disc.Color = new SolidColorBrush(Colors.White);
+                        tile.Disc.Color = new SolidColorBrush(Colors.Black);
                     }
                     else if (Board.Tiles[tile.PosX, tile.PosY] == 2)
                     {
-                        tile.Disc.Color = new SolidColorBrush(Colors.Black);
+                        tile.Disc.Color = new SolidColorBrush(Colors.White);
                     }
                 }
             }    
         }
 
-        public bool IsValidPosition(TileViewModel tile)
+        public bool IsValidPosition(int player, TileViewModel tile)
         {
-            return Board.IsValidPosition(tile.PosX, tile.PosY);
+            return Board.IsValidPosition(player, tile.PosX, tile.PosY);
         }
     }
 }

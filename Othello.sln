@@ -7,8 +7,6 @@ Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "othello.model", "othello.mo
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "othello.view", "othello.view\othello.view.csproj", "{D1E43B97-9C5D-45D8-9F55-E05846D06F2C}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "othello.ia", "othello.ia\othello.ia.csproj", "{7D782DF3-C2F5-4692-ABB3-14BDFD70BC8A}"
-EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|Any CPU = Debug|Any CPU
@@ -23,10 +21,6 @@ Global
 		{D1E43B97-9C5D-45D8-9F55-E05846D06F2C}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{D1E43B97-9C5D-45D8-9F55-E05846D06F2C}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{D1E43B97-9C5D-45D8-9F55-E05846D06F2C}.Release|Any CPU.Build.0 = Release|Any CPU
-		{7D782DF3-C2F5-4692-ABB3-14BDFD70BC8A}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
-		{7D782DF3-C2F5-4692-ABB3-14BDFD70BC8A}.Debug|Any CPU.Build.0 = Debug|Any CPU
-		{7D782DF3-C2F5-4692-ABB3-14BDFD70BC8A}.Release|Any CPU.ActiveCfg = Release|Any CPU
-		{7D782DF3-C2F5-4692-ABB3-14BDFD70BC8A}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE

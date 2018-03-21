@@ -101,10 +101,6 @@
     <None Include="App.config" />
   </ItemGroup>
   <ItemGroup>
-    <ProjectReference Include="..\othello.ia\othello.ia.csproj">
-      <Project>{7d782df3-c2f5-4692-abb3-14bdfd70bc8a}</Project>
-      <Name>othello.ia</Name>
-    </ProjectReference>
     <ProjectReference Include="..\othello.model\othello.model.csproj">
       <Project>{3633D4F9-C0E4-4AF8-92B1-ED283BEFA698}</Project>
       <Name>othello.model</Name>

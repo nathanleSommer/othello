@@ -34,11 +34,13 @@ namespace othello.model
 
         public KeyValuePair<int,int> PlayMoveAI()
         {
-            MinMax ai = new MinMax(this);
+            int alpha = -100;
+            int beta = 100;
+            MinMaxAlphaBeta ai = new MinMaxAlphaBeta(this, alpha, beta);
 
-            KeyValuePair<int, int> pos = ai.PlayMove(2);
 
-            //KeyValuePair<int, int> pos = AINoob.SelectPosition(Tiles, BoardSize);
+            KeyValuePair<int, int> pos = ai.PlayMove(5);
+
             int x = pos.Key;
             int y = pos.Value;
             Tiles[x, y] = 2;
@@ -48,14 +50,61 @@ namespace othello.model
             return pos;
         }
 
-        public bool IsValidPosition(int x, int y)
+        public bool IsValidPosition(int player, int x, int y)
         {
             if (Tiles[x, y] != 0) return false;
-            if (x != 0 && Tiles[x - 1, y] != 0) return true;
-            if (x != BoardSize - 1 && Tiles[x + 1, y] != 0) return true;
-            if (y != 0 && Tiles[x, y - 1] != 0) return true;
-            if (y != BoardSize - 1 && Tiles[x, y + 1] != 0) return true;
-            return false;
+            List<KeyValuePair<int, int>> neighbors = GetNeighbors(player, x, y);
+            if (neighbors.Count == 0) return false;
+            //if (SimulateReturnTiles(player, x, y, neighbors)) return false;
+
+
+            //if (x != 0 && Tiles[x - 1, y] != 0) return true;
+            //if (x != BoardSize - 1 && Tiles[x + 1, y] != 0) return true;
+            //if (y != 0 && Tiles[x, y - 1] != 0) return true;
+            //if (y != BoardSize - 1 && Tiles[x, y + 1] != 0) return true;
+            return true;
+        }
+
+        
+        private List<KeyValuePair<int,int>> GetNeighbors(int player, int x, int y)
+        {
+            List<KeyValuePair<int, int>> neighbors = new List<KeyValuePair<int, int>>();
+            if (y > 0)
+            {
+                if (Tiles[x, y - 1] != 0 && Tiles[x, y - 1] != player) neighbors.Add(new KeyValuePair<int, int>(x, y - 1));
+            }
+            if(y < BoardSize - 1)
+            {
+                if (Tiles[x, y + 1] != 0 && Tiles[x, y + 1] != player) neighbors.Add(new KeyValuePair<int, int>(x, y + 1));
+            }
+            if(x > 0)
+            {
+                if(y > 0)
+                {
+                    if (Tiles[x - 1, y - 1] != 0 && Tiles[x - 1, y - 1] != player) neighbors.Add(new KeyValuePair<int, int>(x - 1, y - 1));
+                } 
+                if( y < BoardSize - 1)
+                {
+                    if (Tiles[x - 1, y + 1] != 0 && Tiles[x - 1, y + 1] != player) neighbors.Add(new KeyValuePair<int, int>(x - 1, y + 1));
+                }
+
+                if (Tiles[x - 1, y] != 0 && Tiles[x - 1, y] != player) neighbors.Add(new KeyValuePair<int, int>(x - 1, y));
+            }
+            if (x < BoardSize - 1)
+            {
+                if (y > 0)
+                {
+                    if (Tiles[x + 1, y - 1] != 0 && Tiles[x + 1, y - 1] != player) neighbors.Add(new KeyValuePair<int, int>(x + 1, y - 1));
+                }
+                if (y < BoardSize - 1)
+                {
+                    if (Tiles[x + 1, y + 1] != 0 && Tiles[x + 1, y + 1] != player) neighbors.Add(new KeyValuePair<int, int>(x + 1, y + 1));
+                }
+
+                if (Tiles[x + 1, y] != 0 && Tiles[x + 1, y] != player) neighbors.Add(new KeyValuePair<int, int>(x + 1, y));
+            }
+
+            return neighbors;
         }
 
         public void returnTiles(int player, int x, int y)
@@ -123,7 +172,7 @@ namespace othello.model
             //on trouve une piece adverse à la diagonale haut-gauche de la piece qu'on vient de placer
             int i = x + 1;
             int j = y + 1;
-            while (Tiles[i, j] != player && Tiles[i, j] != 0 && i != BoardSize && j != BoardSize - 1)
+            while (Tiles[i, j] != player && Tiles[i, j] != 0 && i != BoardSize - 1 && j != BoardSize - 1)
             {
                 i++;
                 j++;
@@ -241,5 +290,26 @@ namespace othello.model
             }
         }
         #endregion
+
+        override
+        public string ToString()
+        {
+            int i = 0;
+            int j = 0;
+            string board = "";
+            while (i < BoardSize)
+            {
+                j = 0;
+                while (j < BoardSize)
+                {
+                    board += Tiles[i, j] + " | ";
+                    j++;
+                }
+                board += Environment.NewLine;
+                i++;
+            }
+
+            return board;
+        }
     }
 }
