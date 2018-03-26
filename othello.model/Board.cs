@@ -28,16 +28,13 @@ namespace othello.model
         {
             Tiles[x, y] = 1;
 
-            /* RETOURNER LES DISCS du joueur 1 (humain) */
+            /* RETOURNER LES DISCS du joueur 1 (human) */
             returnTiles(1, x, y);
         }
 
         public KeyValuePair<int,int> PlayMoveAI()
         {
-            int alpha = -100;
-            int beta = 100;
-            MinMaxAlphaBeta ai = new MinMaxAlphaBeta(this, alpha, beta);
-
+            MinMaxAlphaBeta ai = new MinMaxAlphaBeta(this);
 
             KeyValuePair<int, int> pos = ai.PlayMove(5);
 
@@ -45,27 +42,20 @@ namespace othello.model
             int y = pos.Value;
             Tiles[x, y] = 2;
 
-            /* RETOURNER LES DISCS du joueur 2 (ia) */
+            /* RETOURNER LES DISCS du joueur 2 (ai) */
             returnTiles(2, x, y);
             return pos;
         }
 
+        #region ValidPosition
         public bool IsValidPosition(int player, int x, int y)
         {
             if (Tiles[x, y] != 0) return false;
             List<KeyValuePair<int, int>> neighbors = GetNeighbors(player, x, y);
             if (neighbors.Count == 0) return false;
-            //if (SimulateReturnTiles(player, x, y, neighbors)) return false;
-
-
-            //if (x != 0 && Tiles[x - 1, y] != 0) return true;
-            //if (x != BoardSize - 1 && Tiles[x + 1, y] != 0) return true;
-            //if (y != 0 && Tiles[x, y - 1] != 0) return true;
-            //if (y != BoardSize - 1 && Tiles[x, y + 1] != 0) return true;
             return true;
         }
 
-        
         private List<KeyValuePair<int,int>> GetNeighbors(int player, int x, int y)
         {
             List<KeyValuePair<int, int>> neighbors = new List<KeyValuePair<int, int>>();
@@ -106,6 +96,7 @@ namespace othello.model
 
             return neighbors;
         }
+        #endregion
 
         public void returnTiles(int player, int x, int y)
         {
@@ -169,7 +160,7 @@ namespace othello.model
         {
             if (y >= BoardSize - 2 || x >= BoardSize - 2 || Tiles[x + 1, y + 1] == 0 || Tiles[x + 1, y + 1] == player) return;
 
-            //on trouve une piece adverse à la diagonale haut-gauche de la piece qu'on vient de placer
+            //on trouve une piece adverse à la diagonale bas-droite de la piece qu'on vient de placer
             int i = x + 1;
             int j = y + 1;
             while (Tiles[i, j] != player && Tiles[i, j] != 0 && i != BoardSize - 1 && j != BoardSize - 1)
