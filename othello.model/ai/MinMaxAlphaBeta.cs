@@ -38,6 +38,10 @@ namespace othello.ia.MinMaxAlphaBeta
             int maxi = 0, maxj = 0;
 
             List<KeyValuePair<int, int>> validPos = SelectPossibleMoves(Game.Tiles);
+
+            //no move available = don't play
+            if(validPos.Count == 0) { return default(KeyValuePair<int, int>); }
+
             foreach (KeyValuePair<int,int> move in validPos)
             {
                 int[,] old = new int[size, size];

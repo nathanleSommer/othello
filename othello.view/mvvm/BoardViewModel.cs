@@ -59,18 +59,22 @@ namespace othello.view.mvvm
             ReverseDiscs();
         }
 
-        public void PlayMoveIA()
+        public bool PlayMoveIA()
         {
             KeyValuePair<int,int> pos = Board.PlayMoveAI();
+
+            if(pos.Equals(default(KeyValuePair<int, int>))) { return false; }
+
             foreach(TileViewModel t in Tiles)
             {
                 if(t.PosX == pos.Key && t.PosY == pos.Value)
                 {
                     t.setDisc(new DiscViewModel(t.PosX, t.PosY, new SolidColorBrush(Colors.White)));
                     ReverseDiscs();
-                    return;
+                    break;                   
                 }
             }
+            return true;
         }
 
         private void ReverseDiscs()

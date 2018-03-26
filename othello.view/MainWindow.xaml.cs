@@ -78,16 +78,12 @@ namespace othello.view
             } 
         }
 
-        private void Button_Undo(object sender, RoutedEventArgs e)
-        {
-            _tile.Disc = null;
-            _canPlay = true;
-        }
-
-
         private void Button_EndTurn(object sender, RoutedEventArgs e)
         {
-            Board.PlayMoveIA();
+            if (!Board.PlayMoveIA())
+            {
+                MessageBox.Show("Impossible de placer une pièce : à vous de jouer.");
+            }
             _canPlay = true;
         }
     }

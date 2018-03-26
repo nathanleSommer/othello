@@ -61,43 +61,137 @@ namespace othello.model
             List<KeyValuePair<int, int>> neighbors = new List<KeyValuePair<int, int>>();
             if (y > 0)
             {
-                if (Tiles[x, y - 1] != 0 && Tiles[x, y - 1] != player) neighbors.Add(new KeyValuePair<int, int>(x, y - 1));
+                if (Tiles[x, y - 1] != 0 && Tiles[x, y - 1] != player)
+                {
+                    for(int i = y - 2; i >= 0; i--)
+                    {
+                        if(Tiles[x,i] == player)
+                        {
+                            neighbors.Add(new KeyValuePair<int, int>(x, y - 1));
+                            break;
+                        }
+                    }
+                }        
             }
             if(y < BoardSize - 1)
             {
-                if (Tiles[x, y + 1] != 0 && Tiles[x, y + 1] != player) neighbors.Add(new KeyValuePair<int, int>(x, y + 1));
+                if (Tiles[x, y + 1] != 0 && Tiles[x, y + 1] != player)
+                {
+                    for(int i = y + 2; i < BoardSize; i++)
+                    {
+                        if(Tiles[x,i] == player)
+                        {
+                            neighbors.Add(new KeyValuePair<int, int>(x, y + 1));
+                            break;
+                        }
+                    }
+                }
             }
             if(x > 0)
             {
                 if(y > 0)
                 {
-                    if (Tiles[x - 1, y - 1] != 0 && Tiles[x - 1, y - 1] != player) neighbors.Add(new KeyValuePair<int, int>(x - 1, y - 1));
+                    if (Tiles[x - 1, y - 1] != 0 && Tiles[x - 1, y - 1] != player)
+                    {
+                        int i = x - 2, j = y - 2;
+                        while (i >= 0 && j >= 0)
+                        {
+                            if (Tiles[i, j] == player)
+                            {
+                                neighbors.Add(new KeyValuePair<int, int>(x - 1, y - 1));
+                                break;
+                            }
+                            i--;
+                            j--;
+                        }
+                    }    
                 } 
                 if( y < BoardSize - 1)
                 {
-                    if (Tiles[x - 1, y + 1] != 0 && Tiles[x - 1, y + 1] != player) neighbors.Add(new KeyValuePair<int, int>(x - 1, y + 1));
+                    if (Tiles[x - 1, y + 1] != 0 && Tiles[x - 1, y + 1] != player)
+                    {
+                        int i = x - 2, j = y + 2;
+                        while (i >= 0 && j < BoardSize)
+                        {
+                            if (Tiles[i, j] == player)
+                            {
+                                neighbors.Add(new KeyValuePair<int, int>(x - 1, y + 1));
+                                break;
+                            }
+                            i--;
+                            j++;
+                        }
+                    }     
                 }
 
-                if (Tiles[x - 1, y] != 0 && Tiles[x - 1, y] != player) neighbors.Add(new KeyValuePair<int, int>(x - 1, y));
+                if (Tiles[x - 1, y] != 0 && Tiles[x - 1, y] != player)
+                {
+                    for (int i = x - 2; i >= 0; i--)
+                    {
+                        if (Tiles[i, y] == player)
+                        {
+                            neighbors.Add(new KeyValuePair<int, int>(x - 1, y));
+                            break;
+                        }
+                    }
+                }
+                
             }
             if (x < BoardSize - 1)
             {
                 if (y > 0)
                 {
-                    if (Tiles[x + 1, y - 1] != 0 && Tiles[x + 1, y - 1] != player) neighbors.Add(new KeyValuePair<int, int>(x + 1, y - 1));
+                    if (Tiles[x + 1, y - 1] != 0 && Tiles[x + 1, y - 1] != player)
+                    {
+                        int i = x + 2, j = y - 2;
+                        while (i < BoardSize && j >= 0)
+                        {
+                            if (Tiles[i, j] == player)
+                            {
+                                neighbors.Add(new KeyValuePair<int, int>(x + 1, y - 1));
+                                break;
+                            }
+                            i++;
+                            j--;
+                        }
+                    }
                 }
                 if (y < BoardSize - 1)
                 {
-                    if (Tiles[x + 1, y + 1] != 0 && Tiles[x + 1, y + 1] != player) neighbors.Add(new KeyValuePair<int, int>(x + 1, y + 1));
+                    if (Tiles[x + 1, y + 1] != 0 && Tiles[x + 1, y + 1] != player)
+                    {
+                        int i = x + 2, j = y + 2;
+                        while (i < BoardSize && j < BoardSize)
+                        {
+                            if (Tiles[i, j] == player)
+                            {
+                                neighbors.Add(new KeyValuePair<int, int>(x + 1, y + 1));
+                                break;
+                            }
+                            i++;
+                            j++;
+                        }
+                    }
                 }
 
-                if (Tiles[x + 1, y] != 0 && Tiles[x + 1, y] != player) neighbors.Add(new KeyValuePair<int, int>(x + 1, y));
+                if (Tiles[x + 1, y] != 0 && Tiles[x + 1, y] != player)
+                {
+                    for (int i = x + 2; i < BoardSize; i++)
+                    {
+                        if (Tiles[i, y] == player)
+                        {
+                            neighbors.Add(new KeyValuePair<int, int>(x + 1, y));
+                            break;
+                        }
+                    }
+                }
             }
 
             return neighbors;
         }
         #endregion
 
+        #region ReturnTiles
         public void returnTiles(int player, int x, int y)
         {
             top(player, x, y);
@@ -110,7 +204,6 @@ namespace othello.model
             diagTopRight(player, x, y);
         }
 
-        #region ReturnTiles
         private void diagTopLeft(int player, int x, int y)
         {
             if (y <= 1 || x <= 1 || Tiles[x - 1, y - 1] == 0 || Tiles[x - 1, y - 1] == player) return;
