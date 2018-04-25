@@ -31,7 +31,7 @@ namespace othello.view
         {
             get
             {
-                return 6;
+                return 8;
             }
             private set { }
         }
@@ -70,10 +70,6 @@ namespace othello.view
                     _tile.setDisc(new DiscViewModel(x, y, new SolidColorBrush(Colors.Black)));
                     Board.PlayMovePlayer(x, y);
                     _canPlay = false;
-                }
-                else
-                {
-                    MessageBox.Show("(" + x + ";" + y + ") : " + Board.Board.Tiles[x, y]);
                 }
             } 
         }

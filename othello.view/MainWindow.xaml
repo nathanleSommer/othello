@@ -5,8 +5,8 @@
         xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
         xmlns:local="clr-namespace:othello.view"
         mc:Ignorable="d"
-        Title="MainWindow" Height="700" Width="700">
-    <Grid Height="500" Width="500">
+        Title="MainWindow" Height="1000" Width="1000">
+    <Grid Height="800" Width="800">
         <Grid.Resources>
             <BooleanToVisibilityConverter x:Key="BoolToVis" />
         </Grid.Resources>
@@ -24,8 +24,8 @@
                 <ItemsControl.ItemTemplate>
                     <DataTemplate>
                         <Grid Name="Tile">
-                            <Rectangle Fill="ForestGreen" Width="80" Height="80" Stroke="White" MouseUp="Tile_MouseUp"/>
-                            <Ellipse Name="Disc" Visibility="{Binding HasDisc, Converter={StaticResource BoolToVis}}" Fill="{Binding Disc.Color}"  Width="65" Height="65" />
+                            <Rectangle Fill="ForestGreen" Width="100" Height="100" Stroke="White" MouseUp="Tile_MouseUp"/>
+                            <Ellipse Name="Disc" Visibility="{Binding HasDisc, Converter={StaticResource BoolToVis}}" Fill="{Binding Disc.Color}"  Width="85" Height="85" />
                         </Grid>
                     </DataTemplate>
                 </ItemsControl.ItemTemplate>
